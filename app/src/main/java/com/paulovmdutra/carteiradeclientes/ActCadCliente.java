@@ -146,6 +146,7 @@ public class ActCadCliente extends AppCompatActivity {
         cliente.email    = email;
         cliente.telefone = telefone;
 
+
         if (res = isCampoVazio(nome)){
             edtNome.requestFocus();
         }
