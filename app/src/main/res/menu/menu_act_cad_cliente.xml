@@ -8,8 +8,8 @@
         android:title="@string/title_menu_ok"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_cancelar"
+        android:id="@+id/action_excluir"
         android:orderInCategory="2"
-        android:title="@string/title_menu_cancelar"
+        android:title="@string/title_menu_excluir"
         app:showAsAction="ifRoom" />
 </menu>

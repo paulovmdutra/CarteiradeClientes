@@ -67,7 +67,6 @@ public class ActMain extends AppCompatActivity {
 
         try{
 
-
             dadosOpenHelper = new DadosOpenHelper(this);
 
             conexao = dadosOpenHelper.getWritableDatabase();
@@ -90,8 +89,18 @@ public class ActMain extends AppCompatActivity {
     public void cadastrar(View view){
 
         Intent it = new Intent(ActMain.this, ActCadCliente.class);
-        startActivity(it);
+        startActivityForResult(it, 0);
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        List<Cliente> dados = clienteRepositorio.buscarTodos();
+        clienteAdapter = new ClienteAdapter(dados);
+        lstDados.setAdapter(clienteAdapter);
+
+    }
+
 
 }

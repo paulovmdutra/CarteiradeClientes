@@ -1,10 +1,15 @@
 package com.paulovmdutra.carteiradeclientes;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.paulovmdutra.carteiradeclientes.dominio.entidades.Cliente;
 
@@ -28,7 +33,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
 
         View view = layoutInflater.inflate(R.layout.linha_clientes, parent, false);
 
-        ViewHolderCliente holderCliente = new ViewHolderCliente(view);
+        ViewHolderCliente holderCliente = new ViewHolderCliente(view, parent.getContext());
 
         return holderCliente;
 
@@ -58,15 +63,31 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
         public TextView txtNome;
         public TextView txtTelefone;
 
-        public ViewHolderCliente(View itemView) {
+        public ViewHolderCliente(View itemView, final Context context) {
             super(itemView);
-
             txtNome     = (TextView) itemView.findViewById(R.id.txtNome);
             txtTelefone = (TextView) itemView.findViewById(R.id.txtTelefone);
 
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    if (dados.size() > 0) {
+
+                        Cliente cliente = dados.get(getLayoutPosition());
+
+                        Intent it = new Intent(context, ActCadCliente.class);
+                        it.putExtra("CLIENTE", cliente);
+                        ((AppCompatActivity) context).startActivityForResult(it, 0);
+
+                    }
+                }
+
+            });
+
         }
-
-
 
     }
 

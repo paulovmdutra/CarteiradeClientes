@@ -22,7 +22,7 @@
         <activity
             android:name=".ActCadCliente"
             android:label="@string/title_activity_act_cad_cliente"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

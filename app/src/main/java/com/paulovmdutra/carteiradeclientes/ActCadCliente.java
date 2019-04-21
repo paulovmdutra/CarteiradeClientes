@@ -43,6 +43,7 @@ public class ActCadCliente extends AppCompatActivity {
         setContentView(R.layout.act_cad_cliente);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtNome     = (EditText)findViewById(R.id.edtNome);
         edtEndereco = (EditText)findViewById(R.id.edtEndereco);
@@ -52,6 +53,25 @@ public class ActCadCliente extends AppCompatActivity {
         layoutContentActCadCliente =  (ConstraintLayout)findViewById(R.id.layoutContentActCadCliente);
 
         criarConexao();
+        verificaParametro();
+    }
+
+    private void verificaParametro(){
+
+        Bundle bundle = getIntent().getExtras();
+
+        cliente = new Cliente();
+
+        if ( (bundle != null) && (bundle.containsKey("CLIENTE")) ){
+
+            cliente = (Cliente)bundle.getSerializable("CLIENTE");
+
+            edtNome.setText(cliente.nome);
+            edtEndereco.setText(cliente.endereco);
+            edtEmail.setText(cliente.email);
+            edtTelefone.setText(cliente.telefone);
+        }
+
 
     }
 
@@ -84,13 +104,16 @@ public class ActCadCliente extends AppCompatActivity {
 
     private void confirmar(){
 
-        cliente = new Cliente();
-
         if (validaCampos() == false){
 
             try{
 
-                clienteRepositorio.inserir(cliente);
+                if (cliente.codigo == 0) {
+                    clienteRepositorio.inserir(cliente);
+                }
+                else{
+                    clienteRepositorio.alterar(cliente);
+                }
 
                 finish();
 
@@ -184,16 +207,18 @@ public class ActCadCliente extends AppCompatActivity {
 
         switch(id){
 
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.action_ok:
 
                 confirmar();
-                //Toast.makeText(this, "Botão OK Selecionado", Toast.LENGTH_SHORT).show();
 
                 break;
 
-            case R.id.action_cancelar:
+            case R.id.action_excluir:
 
-               // Toast.makeText(this, "Botão Cancelar Selecionado", Toast.LENGTH_SHORT).show();
+                clienteRepositorio.excluir(cliente.codigo);
                 finish();
 
                 break;
